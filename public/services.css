@@ -1,0 +1,236 @@
+/* Services Page Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.services-container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.services-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 50px;
+  animation: slideDown 0.6s ease-out;
+}
+
+.services-header h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.services-header p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.service-card:hover::before {
+  left: 100%;
+}
+
+.service-card:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.service-card:active {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.service-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transform: rotate(10deg) scale(1.1);
+}
+
+.service-icon svg {
+  width: 60px;
+  height: 60px;
+}
+
+.service-card h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+.service-card p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.services-footer {
+  text-align: center;
+  color: white;
+  opacity: 0.8;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideUp 0.6s ease-out 0.2s backwards;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .services-header h1 {
+    font-size: 36px;
+  }
+
+  .services-header p {
+    font-size: 16px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .service-card {
+    padding: 25px;
+  }
+
+  .service-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .service-icon svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .service-card h3 {
+    font-size: 18px;
+  }
+
+  .service-card p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-header h1 {
+    font-size: 28px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .service-card {
+    padding: 20px;
+  }
+
+  .service-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  body {
+    padding: 10px;
+  }
+}
+
+/* Accessibility */
+.service-card:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .service-card {
+    background: #2d2d2d;
+    color: #fff;
+  }
+
+  .service-card h3 {
+    color: #fff;
+  }
+
+  .service-card p {
+    color: #ccc;
+  }
+}

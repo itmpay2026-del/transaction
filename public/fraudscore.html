@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud Detection - Transaction System</title>
+  <link rel="stylesheet" href="services.css">
+</head>
+<body>
+  <div class="services-container">
+    <header class="services-header">
+      <h1>Fraud Detection Service</h1>
+      <p>Analyze transaction fraud scores</p>
+      <a href="/services" class="back-link">← Back to Services</a>
+    </header>
+
+    <div class="fraud-container">
+      <div class="fraud-card">
+        <h3>Check Fraud Score</h3>
+        <input type="text" id="disputeId" placeholder="Enter Dispute ID">
+        <button id="checkBtn">Check Score</button>
+        <div id="result"></div>
+      </div>
+
+      <div class="fraud-info">
+        <h3>How Fraud Scoring Works</h3>
+        <ul>
+          <li><strong>Reason Analysis:</strong> Keywords in dispute reason affect score</li>
+          <li><strong>Evidence:</strong> Lack of evidence increases risk</li>
+          <li><strong>Account Age:</strong> New accounts have higher risk</li>
+          <li><strong>Transaction Amount:</strong> High-value transactions are scrutinized</li>
+          <li><strong>Reputation:</strong> Seller and buyer ratings influence score</li>
+          <li><strong>History:</strong> Previous disputes increase risk</li>
+        </ul>
+        <p><strong>Risk Levels:</strong> Low (0-2), Medium (3-5), High (6+)</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = '/auth';
+
+    document.getElementById('checkBtn').addEventListener('click', async () => {
+      const disputeId = document.getElementById('disputeId').value.trim();
+      if (!disputeId) {
+        document.getElementById('result').innerHTML = '<p style="color: red;">Please enter a Dispute ID</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/chat/fraudscore/score/${disputeId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          const riskColor = data.risk === 'high' ? 'red' : data.risk === 'medium' ? 'orange' : 'green';
+          document.getElementById('result').innerHTML = `
+            <p><strong>Fraud Score:</strong> ${data.fraudScore}</p>
+            <p><strong>Risk Level:</strong> <span style="color: ${riskColor};">${data.risk.toUpperCase()}</span></p>
+          `;
+        } else {
+          document.getElementById('result').innerHTML = `<p style="color: red;">${data.error}</p>`;
+        }
+      } catch (err) {
+        document.getElementById('result').innerHTML = '<p style="color: red;">Error checking score</p>';
+      }
+    });
+  </script>
+</body>
+</html>

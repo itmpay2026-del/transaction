@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+body {
+  background: #f0f2f5;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+h1 {
+  text-align: center;
+  color: #1a1a2e;
+}
+.auth-box, .balance-card, .send-card, .history-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #e9ecef;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.tabs button.active {
+  background: #4361ee;
+  color: white;
+}
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+button {
+  background: #4361ee;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+button:hover {
+  background: #3a56d4;
+}
+.balance-card div {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2b9348;
+  text-align: center;
+}
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+  margin-bottom: 20px;
+}
+#historyList {
+  list-style: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+#historyList li {
+  background: #f8f9fa;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 12px;
+  border-left: 4px solid #4361ee;
+}
+.status {
+  float: right;
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.status.success { background: #d4edda; color: #155724; }
+.status.failed { background: #f8d7da; color: #721c24; }
+#sendMessage {
+  text-align: center;
+  margin-top: 8px;
+}
