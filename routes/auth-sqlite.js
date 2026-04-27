@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const db = require("../config/database");
 const User = require("../models/User");
+const { sendEmail } = require("../services/emailService");
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -41,6 +42,8 @@ router.post("/register", async (req, res) => {
               expiresIn: "7d",
             });
             res.status(201).json({ token, email });
+            // Send welcome email
+            sendEmail(email, 'Welcome to Wallet App', 'Thank you for registering!');
           } catch (mongoErr) {
             // If MongoDB fails, still allow registration but log error
             console.error('MongoDB user creation failed:', mongoErr);
@@ -48,6 +51,8 @@ router.post("/register", async (req, res) => {
               expiresIn: "7d",
             });
             res.status(201).json({ token, email });
+            // Send welcome email
+            sendEmail(email, 'Welcome to Wallet App', 'Thank you for registering!');
           }
         }
       );

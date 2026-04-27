@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("../config/database");
 const auth = require("../middleware/auth-sqlite");
+const { sendEmail } = require("../services/emailService");
 const router = express.Router();
 
 // Get balance
@@ -96,6 +97,8 @@ router.post("/send", auth, async (req, res) => {
                   (err) => {
                     if (err) return res.status(500).json({ message: err.message });
                     res.json({ message: "Money sent successfully", newBalance: newSenderBalance });
+                    // Send email notification
+                    sendEmail(receiverEmail, 'Money Received', `You have received $${amount} from ${senderEmail}.`);
                   }
                 );
               }
