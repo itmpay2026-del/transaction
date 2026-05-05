@@ -138,7 +138,7 @@
   <div class="chat-container">
     <div class="chat-header">
       <h1>Live Dispute Chat</h1>
-      <a href="/services" class="back-link">&larr; Back to Services</a>
+      <a href="/services" class="back-link">&larr; Back to Dashboard</a>
     </div>
 
     <div class="chat-setup" id="setupSection">
@@ -163,8 +163,19 @@
   <script>
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('You must be logged in to use the chat.');
-      window.location.href = '/auth';
+      window.location.href = '/';
+    } else {
+      fetch('/auth/verify', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
+        if (!res.ok) {
+          localStorage.clear();
+          window.location.href = '/';
+        }
+      }).catch(() => {
+        localStorage.clear();
+        window.location.href = '/';
+      });
     }
 
     const socket = io();

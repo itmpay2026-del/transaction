@@ -5,6 +5,11 @@ const db = require("../config/database");
 const User = require("../models/User");
 const { sendEmail } = require("../services/emailService");
 const router = express.Router();
+const { authenticate } = require("../middleware/auth");
+
+router.get("/verify", authenticate, (req, res) => {
+  res.json({ valid: true, user: req.user });
+});
 
 router.post("/register", async (req, res) => {
   try {

@@ -3,19 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services - Transaction System</title>
+  <title>Dashboard - TWIKAFRIKA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="services.css">
 </head>
 <body>
   <div class="services-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <span id="hubUserEmail" style="flex: 1; font-weight: bold; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+      <span style="flex: 6; text-align: center; font-family: 'Montserrat', sans-serif; text-transform: uppercase; font-weight: 900; letter-spacing: 2px; color: #2196F3; font-size: 1.5rem;">TWIKAFRIKA</span>
+      <div style="flex: 1; text-align: right;">
+        <button id="hubLogoutBtn" style="background: #E91E63; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Logout</button>
+      </div>
+    </div>
     <header class="services-header">
-      <h1>Transaction System Services</h1>
+      <h1>Dashboard</h1>
       <p>Select a service to get started</p>
     </header>
 
     <nav class="services-grid">
       <!-- Wallet Service -->
-      <a href="/wallet" class="service-card">
+      <a href="/dashboard" class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <rect x="15" y="30" width="70" height="50" rx="5" fill="none" stroke="#4CAF50" stroke-width="3"/>
@@ -28,18 +36,7 @@
         <p>Manage your digital wallet and transactions</p>
       </a>
 
-      <!-- Authentication Service -->
-      <a href="/authentication" class="service-card">
-        <div class="service-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="35" r="15" fill="none" stroke="#2196F3" stroke-width="2.5"/>
-            <path d="M 30 60 Q 30 50 50 50 Q 70 50 70 60 L 70 80 Q 70 85 65 85 L 35 85 Q 30 85 30 80 Z" fill="none" stroke="#2196F3" stroke-width="2.5"/>
-            <path d="M 45 68 L 50 73 L 55 68" fill="none" stroke="#2196F3" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3>Authentication</h3>
-        <p>Login and manage your account</p>
-      </a>
+
 
       <!-- Disputes Service -->
       <a href="/disputes" class="service-card">
@@ -111,18 +108,7 @@
         <p>Enter the real-time chat screen</p>
       </a>
 
-      <!-- Dashboard -->
-      <a href="/dashboard" class="service-card">
-        <div class="service-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="20" width="30" height="35" fill="none" stroke="#673AB7" stroke-width="2.5" rx="2"/>
-            <rect x="55" y="20" width="25" height="50" fill="none" stroke="#673AB7" stroke-width="2.5" rx="2"/>
-            <rect x="20" y="60" width="35" height="20" fill="none" stroke="#673AB7" stroke-width="2.5" rx="2"/>
-          </svg>
-        </div>
-        <h3>Dashboard</h3>
-        <p>View your wallet dashboard</p>
-      </a>
+
     </nav>
 
     <footer class="services-footer">
@@ -131,6 +117,29 @@
   </div>
 
   <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/';
+    } else {
+      fetch('/auth/verify', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
+        if (!res.ok) {
+          localStorage.clear();
+          window.location.href = '/';
+        }
+      }).catch(() => {
+        localStorage.clear();
+        window.location.href = '/';
+      });
+    }
+
+    document.getElementById('hubUserEmail').textContent = localStorage.getItem('userEmail');
+    document.getElementById('hubLogoutBtn').addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = '/';
+    });
+
     // Add smooth navigation
     document.querySelectorAll('.service-card').forEach(card => {
       card.addEventListener('mouseenter', function() {

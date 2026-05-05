@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("../config/database");
-const auth = require("../middleware/auth-sqlite");
+const { authenticate: auth } = require("../middleware/auth");
 const { sendEmail } = require("../services/emailService");
 const router = express.Router();
 

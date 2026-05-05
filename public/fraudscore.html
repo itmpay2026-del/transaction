@@ -11,7 +11,7 @@
     <header class="services-header">
       <h1>Fraud Detection Service</h1>
       <p>Analyze transaction fraud scores</p>
-      <a href="/services" class="back-link">← Back to Services</a>
+      <a href="/services" class="back-link">← Back to Dashboard</a>
     </header>
 
     <div class="fraud-container">
@@ -39,7 +39,21 @@
 
   <script>
     const token = localStorage.getItem('token');
-    if (!token) window.location.href = '/auth';
+    if (!token) {
+      window.location.href = '/';
+    } else {
+      fetch('/auth/verify', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
+        if (!res.ok) {
+          localStorage.clear();
+          window.location.href = '/';
+        }
+      }).catch(() => {
+        localStorage.clear();
+        window.location.href = '/';
+      });
+    }
 
     document.getElementById('checkBtn').addEventListener('click', async () => {
       const disputeId = document.getElementById('disputeId').value.trim();

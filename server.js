@@ -1,4 +1,6 @@
 require("dotenv").config();
+const crypto = require("crypto");
+process.env.JWT_SECRET = crypto.randomBytes(32).toString("hex");
 const express = require("express");
 const path = require("path");
 const http = require("http");
@@ -62,9 +64,9 @@ app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "dashboard.html"));
 });
 
-// Root route serves services page
+// Root route serves login page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "services.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Redirects for vanity URLs mapping to original routes
