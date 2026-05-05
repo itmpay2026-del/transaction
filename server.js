@@ -36,7 +36,7 @@ async function startMongoDB() {
   }
 }
 
-startMongoDB();
+// Wait to call startMongoDB later before listening
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -83,4 +83,6 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+startMongoDB().then(() => {
+  server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+});
